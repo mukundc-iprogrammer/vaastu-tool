@@ -1,0 +1,63 @@
+.Card-Box {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.Card {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    height: 100px;
+    margin: 50px 10px;
+    padding: 50px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 3px #ccc;
+    border-radius: 5px;
+}
+
+.Card h6 {
+    cursor: pointer;
+}
+
+.Card div {
+    margin: -40px -20px;
+}
+
+.Card p{
+    /* width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+    overflow:hidden;
+line-height: 2rem;
+max-height: 8rem;
+-webkit-box-orient: vertical;
+display: block;
+display: -webkit-box;
+overflow: hidden !important;
+text-overflow: ellipsis;
+-webkit-line-clamp: 4;
+}
+
+@media (max-width: 600px) {
+    .Card-Box {
+        flex-direction: column;
+    }
+    .Card p{
+        /* width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; */
+        overflow:hidden;
+  line-height: 2rem;
+  max-height: 8rem;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+    }
+}

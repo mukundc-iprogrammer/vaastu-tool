@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Switch } from 'react-router-dom';
+
+import Header from './components/Header/Header';
+import VaastuCheck from './components/VaastuCheck/VaastuCheck';
+import VaastuScore from './components/VaastuScore/VaastuScore';
+import VaastuScoreCheck from './container/VaastuScoreCheck/VaastuScoreCheck';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Switch>
+        <Route path='/' exact component={VaastuCheck} />
+        <Route path='/vaastuscorecheck' component={VaastuScoreCheck} />
+        <Route path='/vaastuscore' component={VaastuScore} />
+      </Switch>
     </div>
   );
 }

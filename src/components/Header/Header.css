@@ -1,0 +1,25 @@
+.Header {
+    height: 56px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #562C84;
+    display: flex;
+    /* justify-content: start; */
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 90;
+}
+
+.Header div {
+    color: white;
+    padding: 15px;
+}
+
+/* @media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
+} */

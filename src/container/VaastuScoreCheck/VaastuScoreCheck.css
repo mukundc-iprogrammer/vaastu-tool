@@ -1,0 +1,36 @@
+.Box {
+    display: flex;
+    flex-direction: row;
+}
+
+.LeftBox {
+    width: 35%;
+    height: 668px;
+    margin-top: 56px;
+    background-color: #eee;
+}
+
+.RightBox {
+    width: 40%;
+    height: 100%;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.DirectionBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.InsideBox {
+    width: 140px;
+    height: 160px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+
+.Direction {
+    cursor: pointer;
+}
