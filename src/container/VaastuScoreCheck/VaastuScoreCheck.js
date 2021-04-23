@@ -7,15 +7,15 @@ export default class VaastuScoreCheck extends Component {
         score: {},
         roomTypes: [],
         direction: '',
-        'North East': [],
-        'North': [],
-        'North West': [],
-        'West': [],
-        'Centre': [],
-        'East': [],
-        'South West': [],
-        'South': [],
-        'South East': []
+        'North East': {},
+        'North': {},
+        'North West': {},
+        'West': {},
+        'Centre': {},
+        'East': {},
+        'South West': {},
+        'South': {},
+        'South East': {}
     }
 
 
@@ -23,13 +23,12 @@ export default class VaastuScoreCheck extends Component {
         
         fetch('https://luayn58dm9.execute-api.ap-south-1.amazonaws.com/stage/vastu/getRoomList')
             .then(res => res.json())
-            // .then(res => console.log(res))
             .then(res => {
                 this.setState({
                     roomTypes: res.payload.data.roomList, 
                     direction: direction
                 });
-                console.log(this.state.roomTypes)
+                console.log(res)
             })
     }
 
@@ -37,15 +36,15 @@ export default class VaastuScoreCheck extends Component {
         console.log(this.props)
         let postData = {
             "selectedRoomsAndDirection": {
-                "North West":[...this.state['North West']],
-                "North":[...this.state['North']],
-                "North East":[...this.state['North East']],
-                "West":[...this.state['West']],
-                "Centre":[...this.state['Centre']],
-                "East":[...this.state['East']],
-                "South West":[...this.state['South West']],
-                "South":[...this.state['South']],
-                "South East":[...this.state['South East']]
+                "North West":[...Object.keys(this.state['North West'])],
+                "North":[...Object.keys(this.state['North'])],
+                "North East":[...Object.keys(this.state['North East'])],
+                "West":[...Object.keys(this.state['West'])],
+                "Centre":[...Object.keys(this.state['Centre'])],
+                "East":[...Object.keys(this.state['East'])],
+                "South West":[...Object.keys(this.state['South West'])],
+                "South":[...Object.keys(this.state['South'])],
+                "South East":[...Object.keys(this.state['South East'])]
             }
         }
         fetch('https://luayn58dm9.execute-api.ap-south-1.amazonaws.com/stage/vastu/getVastuScore', {
@@ -71,16 +70,21 @@ export default class VaastuScoreCheck extends Component {
     checkedHandler = (event, direction) => {
         // debugger
         console.log(event.target.checked)
-        let dir = [];
+        // let dir = [];
+        let val = event.target.value;
+        let dir = {...this.state[direction]};
         if(event.target.checked){
-            dir = [...this.state[direction], event.target.value]
+            // dir = [...this.state[direction], event.target.value]
+            dir[val] = val
         }else {
-            dir = [...this.state[direction]]
-            for(let i=0;i<dir.length;i++){
-                if(dir[i] === event.target.value) {
-                    dir.splice(i, 1)
-                }
-            }
+            // dir = [...this.state[direction]]
+            // for(let i=0;i<dir.length;i++){
+            //     if(dir[i] === event.target.value) {
+            //         dir.splice(i, 1)
+            //     }
+            // }
+            // dir = dir.filter(item => item !== event.target.value)
+            delete dir[val]
         }
         // if (dir.has(event.target.value)) {
         //     dir.delete(event.target.value);
@@ -105,7 +109,8 @@ export default class VaastuScoreCheck extends Component {
                         <div key={roomType} style={{justifyContent: 'left', marginLeft: '0px'}}>
                             <input 
                                 type='checkbox'
-                                
+                                // checked={this.state[this.state.direction].includes(roomType) ? true : false}
+                                checked={this.state[this.state.direction][roomType] ? true : false}
                                 name={roomType} 
                                 value={roomType}
                                 onChange={(e) => this.checkedHandler(e, this.state.direction)}
@@ -116,21 +121,27 @@ export default class VaastuScoreCheck extends Component {
                 </div>
                 <div className='RightBox'>
                     <div className='DirectionBox'>
-                        <div className='InsideBox'>
+                        {/* <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler('North West')}>NORTH WEST</p>
                             <div>{this.state['North West'] && this.state['North West'].map(item => (
+                                <div key={item}>{item}</div>
+                            ))}</div>
+                        </div> */}
+                        <div className='InsideBox'>
+                            <p className='Direction' onClick={() => this.DirectionHandler('North West')}>NORTH WEST</p>
+                            <div>{this.state['North West'] && Object.keys(this.state['North West']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("North")}>NORTH</p>
-                            <div>{this.state['North'] && this.state['North'].map(item => (
+                            <div>{this.state['North'] && Object.keys(this.state['North']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("North East")}>NORTH EAST</p>
-                            <div>{this.state['North East'] && this.state['North East'].map(item => (
+                            <div>{this.state['North East'] && Object.keys(this.state['North East']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
@@ -138,19 +149,19 @@ export default class VaastuScoreCheck extends Component {
                     <div className='DirectionBox'>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("West")}>WEST</p>
-                            <div>{this.state['West'] && this.state['West'].map(item => (
+                            <div>{this.state['West'] && Object.keys(this.state['West']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("Centre")}>CENTRE OF THE HOME</p>
-                            <div>{this.state['Centre'] && this.state['Centre'].map(item => (
+                            <div>{this.state['Centre'] && Object.keys(this.state['Centre']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("East")}>EAST</p>
-                            <div>{this.state['East'] && this.state['East'].map(item => (
+                            <div>{this.state['East'] && Object.keys(this.state['East']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
@@ -158,19 +169,19 @@ export default class VaastuScoreCheck extends Component {
                     <div className='DirectionBox'>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("South West")}>SOUTH WEST</p>
-                            <div>{this.state['South West'] && this.state['South West'].map(item => (
+                            <div>{this.state['South West'] && Object.keys(this.state['South West']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("South")}>SOUTH</p>
-                            <div>{this.state['South'] && this.state['South'].map(item => (
+                            <div>{this.state['South'] && Object.keys(this.state['South']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
                         <div className='InsideBox'>
                             <p className='Direction' onClick={() => this.DirectionHandler("South East")}>SOUTH EAST</p>
-                            <div>{this.state['South East'] && this.state['South East'].map(item => (
+                            <div>{this.state['South East'] && Object.keys(this.state['South East']).map(item => (
                                 <div key={item}>{item}</div>
                             ))}</div>
                         </div>
